@@ -1,11 +1,10 @@
 package tests;
 
-import PageObjects.CreateProgramPage;
-import PageObjects.HomePage;
-import PageObjects.LoginPage;
-import PageObjects.ProgramsPage;
+import PageObjects.*;
+import elementMapper.EditProgramElementMapper;
 import elementMapper.HomeElementMapper;
 import org.junit.Test;
+import org.openqa.selenium.support.FindBy;
 import utils.Browser;
 import utils.Utils;
 
@@ -50,6 +49,7 @@ public class SetupTests extends BaseTests{
     @Test
     public void testCreateProgram() throws InterruptedException {
         CreateProgramPage createProgramPage = new CreateProgramPage();
+        EditProgramPage editProgramPage = new EditProgramPage();
 
         testGoToProgramPage();
         Thread.sleep(8000);
@@ -65,6 +65,19 @@ public class SetupTests extends BaseTests{
         createProgramPage.fillScope();
         createProgramPage.clickFinished();
         createProgramPage.clickSaveProgram();
+        assertTrue(editProgramPage.isEditProgramPage());
+    }
 
+    @Test
+    public void testEditProgram() throws InterruptedException {
+        EditProgramPage editProgramPage = new EditProgramPage();
+
+        testCreateProgram();
+        editProgramPage.selectOthersPublishingCompany();
+        editProgramPage.fillMaterialTitle();
+        editProgramPage.fillMaterialLink();
+        editProgramPage.addMaterial();
+        assertTrue(editProgramPage.isMaterialAdded());
+        editProgramPage.clickAddActivityBtn();
     }
 }
